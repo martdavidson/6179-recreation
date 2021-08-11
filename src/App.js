@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Admin, Resource } from 'react-admin';
+
+import { PostList } from './posts';
+import {PostShow} from './postShow';
+
+const dataProvider = {
+  getList:    (resource, params) => {
+    return Promise.resolve({data: [{id: '123', things: []}], total: 1, })
+  },
+  getOne:     (resource, params) => {
+    return Promise.resolve({data: {id: '123', things: []}})
+  },
+  getMany:    (resource, params) => Promise,
+  getManyReference: (resource, params) => Promise,
+  create:     (resource, params) => Promise,
+  update:     (resource, params) => Promise,
+  updateMany: (resource, params) => Promise,
+  delete:     (resource, params) => Promise,
+  deleteMany: (resource, params) => Promise,
 }
+
+const App = () => (
+  <Admin dataProvider={dataProvider}>
+    <Resource name="posts" list={PostList} show={PostShow}/>
+  </Admin>
+);
 
 export default App;
